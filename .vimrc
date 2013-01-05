@@ -98,7 +98,11 @@ let g:neocomplcache_enable_at_startup = 1
 " " <C-k> にマッピング
  imap <C-k> <Plug>(neocomplcache_snippets_expand)
  smap <C-k> <Plug>(neocomplcache_snippets_expand)
-
+" snippets test"
+" For snippet_complete marker.
+ if has('conceal')
+   set conceallevel=2 concealcursor=i
+   endif
 
 
 
