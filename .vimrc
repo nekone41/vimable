@@ -14,6 +14,7 @@ NeoBundle 'git://github.com/Shougo/vimproc.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
 NeoBundle 'git://github.com/thinca/vim-quickrun.git'
+NeoBundle 'git://github.com/godlygeek/tabular.git'
 NeoBundle 'vim-scripts/yanktmp.vim'
 filetype plugin on
 "filetype indent on
@@ -22,6 +23,7 @@ highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
 au BufNewFile,BufRead * match ZenkakuSpace /　/
 "
 ""-------------------------------
+set number
 set si
 set expandtab
 set tabstop=2
@@ -44,10 +46,26 @@ set history=50 " コロンコマンドの記録数
 set cinoptions=j1 " j1 -> java indent 4
 set wildmenu " コマンドライン入力時の<TAB>で補完候補表示
 set modeline "モードライン有効(default)
-imap <C-j> <C-[>
-imap { {}<Left>
-imap [ []<Left>
-imap ( ()<Left>
+"imap <C-j> <C-[>
+"imap { {}<Left>
+"imap [ []<Left>
+"imap ( ()<Left>
+
+"tabular
+
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+  let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+  let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+  Tabularize/|/l1
+  normal! 0
+  call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+ endfunction
+
 
 "-Enable textmanip------------------------------
 "
