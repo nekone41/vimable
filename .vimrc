@@ -16,6 +16,9 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git'
 NeoBundle 'git://github.com/thinca/vim-quickrun.git'
 NeoBundle 'git://github.com/godlygeek/tabular.git'
 NeoBundle 'vim-scripts/yanktmp.vim'
+NeoBundle 'taglist.vim'
+
+
 filetype plugin on
 "filetype indent on
 syntax on
