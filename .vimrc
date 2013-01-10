@@ -49,11 +49,11 @@ set history=50 " コロンコマンドの記録数
 set cinoptions=j1 " j1 -> java indent 4
 set wildmenu " コマンドライン入力時の<TAB>で補完候補表示
 set modeline "モードライン有効(default)
-"imap <C-j> <C-[>
+imap <C-j> <C-[>
 "imap { {}<Left>
 "imap [ []<Left>
-"imap ( ()<Left>
-
+"imap ( ()<Left>x
+nmap <TAB> <C-w><C-w>
 "tabular
 
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
