@@ -17,6 +17,8 @@ NeoBundle 'git://github.com/thinca/vim-quickrun.git'
 NeoBundle 'git://github.com/godlygeek/tabular.git'
 NeoBundle 'vim-scripts/yanktmp.vim'
 NeoBundle 'taglist.vim'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'git://github.com/wesleyche/SrcExpl.git'
 
 
 filetype plugin on
@@ -54,6 +56,19 @@ imap <C-j> <C-[>
 "imap [ []<Left>
 "imap ( ()<Left>x
 nmap <TAB> <C-w><C-w>
+"source exploer
+"自動でプレビューを表示する。TODO:うざくなってきたら手動にする。またはソースを追う時だけ自動に変更する。
+let g:SrcExpl_RefreshTime   = 1
+""プレビューウインドウの高さ
+let g:SrcExpl_WinHeight     = 9
+"tagsは自動で作成する
+let g:SrcExpl_UpdateTags    = 0
+""マッピング
+let g:SrcExpl_RefreshMapKey = "<Space>"
+let g:SrcExpl_GoBackMapKey  = "<C-b>"
+nmap <F8> :SrcExplToggle<CR>
+
+
 "tabular
 
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
@@ -68,7 +83,30 @@ function! s:align()
   call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
   endif
  endfunction
-
+"
+"------------------------------------
+"" unite.vim
+"------------------------------------
+"" 入力モードで開始する
+let g:unite_enable_start_insert=0
+" バッファ一覧
+noremap <C-U><C-B> :Unite buffer<CR>
+" ファイル一覧
+noremap <C-U><C-F> :UniteWithBufferDir -buffer-name=files file<CR>
+" 最近使ったファイルの一覧
+noremap <C-U><C-R> :Unite file_mru<CR>
+" レジスタ一覧
+noremap <C-U><C-Y> :Unite -buffer-name=register register<CR>
+" ファイルとバッファ
+noremap <C-U><C-U> :Unite buffer file_mru<CR>
+" 全部
+noremap <C-U><C-A> :Unite UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+" ESCキーを2回押すと終了する
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+" Unite-grep
+nnoremap <silent> ,ug :Unite grep:%:-iHRn<CR>
+"
 
 "-Enable textmanip------------------------------
 "
