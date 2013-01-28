@@ -158,6 +158,10 @@ let g:neocomplcache_clang_library_path = '/Users/nekosu/vimshare/lib'
 let g:neocomplcache_clang_user_options =
                         \ '-I /usr/include/ '.
                         \ '-I /usr/include/boost/'
+" 補完候補検索時に大文字・小文字を無視する
+ let g:neocomplcache_enable_ignore_case = 1
+ " 大文字が入力されるまで大文字小文字の区別を無視する
+ let g:neocomplcache_enable_smart_case = 1
 
 
 
