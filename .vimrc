@@ -203,6 +203,7 @@ let g:neocomplcache_enable_at_startup = 1
      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
      autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
      autocmd FileType c setlocal omnifunc=ccomplete#Complete
+     autocmd FileType cpp setlocal omnifunc=cppcomplete#Complete
      autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
      " Enable heavy omni completion.
