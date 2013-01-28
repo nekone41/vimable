@@ -145,6 +145,76 @@ let g:neocomplcache_enable_at_startup = 1
    set conceallevel=2 concealcursor=i
    endif
 
+" 補完候補検索時に大文字・小文字を無視する
+ let g:neocomplcache_enable_ignore_case = 1
+ " 大文字が入力されるまで大文字小文字の区別を無視する
+ let g:neocomplcache_enable_smart_case = 1
+
+
+" 関数を補完するための区切り文字パターン
+ if !exists('g:neocomplcache_delimiter_patterns')
+   let g:neocomplcache_delimiter_patterns = {}
+   endif
+   let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
+   let g:neocomplcache_delimiter_patterns.vim = ['#']
+   let g:neocomplcache_delimiter_patterns.cpp = ['::']
+
+
+   "インクルード補完 {{{
+     " ======================================
+
+       " インクルードパスを指定
+       let g:neocomplcache_include_paths = {
+         \ 'cpp' :  '.,/opt/local/include/gcc46/c++,/opt/local/include,/usr/include',
+         \ 'c' : '.,/usr/include',
+         \ 'ruby' : '.,$HOME/.rvm/rubies/**/lib/ruby/1.8/',
+         \ }
+
+     "インクルード文のパターンを指定
+       let g:neocomplcache_include_patterns = {
+         \ 'cpp' : '^\s*#\s*include',
+         \ 'ruby' : '^\s*require',
+         \ 'perl' : '^\s*use',
+         \ }
+     "インクルード先のファイル名の解析パターン
+       let g:neocomplcache_include_exprs = {
+         \ 'ruby' : substitute(v:fname,'::','/','g')
+           \ }
+
+     "
+     "ファイルを探す際に、この値を末尾に追加したファイルも探す。
+       let g:neocomplcache_include_suffixes = {
+         \ 'ruby' : '.rb',
+         \ 'haskell' : '.hs'
+           \ }
+
+     " }}}
+
+     "オムニ補完 {{{
+     " ======================================
+
+     " オムニ補完の手動呼び出し
+     inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" :neocomplcache#manual_omni_complete()
+
+     " FileType毎のOmni補完を設定
+     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+     autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+     autocmd FileType c setlocal omnifunc=ccomplete#Complete
+     autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+     " Enable heavy omni completion.
+     if !exists('g:neocomplcache_omni_patterns')
+       let g:neocomplcache_omni_patterns = {}
+     endif
+       let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+       let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+       let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+       let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+     " }}}
 
 
 
@@ -162,6 +232,14 @@ let g:neocomplcache_clang_user_options =
  let g:neocomplcache_enable_ignore_case = 1
  " 大文字が入力されるまで大文字小文字の区別を無視する
  let g:neocomplcache_enable_smart_case = 1
+
+" 関数を補完するための区切り文字パターン
+ if !exists('g:neocomplcache_delimiter_patterns')
+   let g:neocomplcache_delimiter_patterns = {}
+   endif
+   let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
+   let g:neocomplcache_delimiter_patterns.vim = ['#']
+   let g:neocomplcache_delimiter_patterns.cpp = ['::']
 
 
 
