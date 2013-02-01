@@ -54,7 +54,31 @@ set modeline "モードライン有効(default)
 imap <C-j> <C-[>
 "imap { {}<Left>
 "imap [ []<Left>
-"imap ( ()<Left>x
+"remap 0 $ 
+"nnoremap 1 0 
+"
+"" 挿入モードでのカーソル移動
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+" カーソル前の文字削除
+ inoremap <silent> <C-h> <C-g>u<C-h>
+ " カーソル後の文字削除
+ inoremap <silent> <C-d> <Del>
+ " カーソルから行頭まで削除
+ inoremap <silent> <C-d>e <Esc>lc^
+ " カーソルから行末まで削除
+ inoremap <silent> <C-d>0 <Esc>lc$
+ " カーソルから行頭までヤンク
+ inoremap <silent> <C-y>e <Esc>ly0<Insert>
+ " カーソルから行末までヤンク
+ inoremap <silent> <C-y>0 <Esc>ly$<Insert>
+imap ( ()<Left>
+
+
+
 nmap <TAB> <C-w><C-w>
 "source exploer
 "自動でプレビューを表示する。TODO:うざくなってきたら手動にする。またはソースを追う時だけ自動に変更する。
