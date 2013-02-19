@@ -54,30 +54,8 @@ set modeline "モードライン有効(default)
 imap <C-j> <C-[>
 "imap { {}<Left>
 "imap [ []<Left>
-"remap 0 $ 
-"nnoremap 1 0 
-"
-"" 挿入モードでのカーソル移動
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
 
-" カーソル前の文字削除
- inoremap <silent> <C-h> <C-g>u<C-h>
- " カーソル後の文字削除
- inoremap <silent> <C-d> <Del>
- " カーソルから行頭まで削除
- inoremap <silent> <C-d>e <Esc>lc^
- " カーソルから行末まで削除
- inoremap <silent> <C-d>0 <Esc>lc$
- " カーソルから行頭までヤンク
- inoremap <silent> <C-y>e <Esc>ly0<Insert>
- " カーソルから行末までヤンク
- inoremap <silent> <C-y>0 <Esc>ly$<Insert>
-imap ( ()<Left>
-
-
+"imap ( ()<Left>
 
 nmap <TAB> <C-w><C-w>
 "source exploer
@@ -178,7 +156,7 @@ let g:neocomplcache_enable_at_startup = 1
 " 関数を補完するための区切り文字パターン
  if !exists('g:neocomplcache_delimiter_patterns')
    let g:neocomplcache_delimiter_patterns = {}
-   endif
+ endif
    let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
    let g:neocomplcache_delimiter_patterns.vim = ['#']
    let g:neocomplcache_delimiter_patterns.cpp = ['::']
@@ -186,31 +164,48 @@ let g:neocomplcache_enable_at_startup = 1
 
    "インクルード補完 {{{
      " ======================================
+"インクルード補完。よくわからない。初期化のみに留める
+"通常は設定する必要はないらしい。
+"Vim標準のインクルード補完を模倣しているそうなので、そちらを勉強する
+if !exists('g:neocomplcache_include_paths')
+let g:neocomplcache_include_paths = {}
+endif
+if !exists('g:neocomplcache_include_patterns')
+let g:neocomplcache_include_patterns = {}
+endif
+if !exists('g:neocomplcache_ctags_arguments_list')
+let g:neocomplcache_ctags_arguments_list = {}
+endif
+
+"ctagsの引数
+let g:neocomplcache_ctags_arguments_list = {
+  \ 'cpp' : '-R'
+  \ }
+
+
 
        " インクルードパスを指定
        let g:neocomplcache_include_paths = {
-         \ 'cpp' :  '.,/opt/local/include/gcc46/c++,/opt/local/include,/usr/include',
+         \ 'cpp' :  '.,/opt/local/include,/usr/include',
          \ 'c' : '.,/usr/include',
-         \ 'ruby' : '.,$HOME/.rvm/rubies/**/lib/ruby/1.8/',
          \ }
 
      "インクルード文のパターンを指定
        let g:neocomplcache_include_patterns = {
          \ 'cpp' : '^\s*#\s*include',
-         \ 'ruby' : '^\s*require',
          \ 'perl' : '^\s*use',
          \ }
      "インクルード先のファイル名の解析パターン
-       let g:neocomplcache_include_exprs = {
-         \ 'ruby' : substitute(v:fname,'::','/','g')
-           \ }
+     " let g:neocomplcache_include_exprs = {
+     "   \ 'ruby' : substitute(v:fname,'::','/','g')
+     "     \ }
 
      "
      "ファイルを探す際に、この値を末尾に追加したファイルも探す。
-       let g:neocomplcache_include_suffixes = {
-         \ 'ruby' : '.rb',
-         \ 'haskell' : '.hs'
-           \ }
+     " let g:neocomplcache_include_suffixes = {
+     "   \ 'ruby' : '.rb',
+     "   \ 'haskell' : '.hs'
+     "     \ }
 
      " }}}
 
@@ -229,7 +224,6 @@ let g:neocomplcache_enable_at_startup = 1
      autocmd FileType c setlocal omnifunc=ccomplete#Complete
      autocmd FileType cpp setlocal omnifunc=cppcomplete#Complete
      autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-
      " Enable heavy omni completion.
      if !exists('g:neocomplcache_omni_patterns')
        let g:neocomplcache_omni_patterns = {}
