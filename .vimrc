@@ -70,7 +70,7 @@ let g:SrcExpl_RefreshMapKey = "<Space>"
 let g:SrcExpl_GoBackMapKey  = "<C-b>"
 nmap <F8> :SrcExplToggle<CR>
 
-
+set mouse=a
 "tabular
 
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
@@ -134,8 +134,6 @@ let g:neocomplcache_enable_at_startup = 1
  inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
  inoremap <expr><C-y> neocomplcache#close_popup()
  inoremap <expr><C-e> neocomplcache#cancel_popup()
- autocmd FileType c setlocal omnifunc=ccomplete#CompleteTags
- autocmd FileType cpp setlocal omnifunc=cppcomplete#CompleteTags
 " " スニペットファイルの配置場所
  let g:NeoComplCache_SnippetsDir = '~/.vim/snippets'
 " " <C-k> にマッピング
